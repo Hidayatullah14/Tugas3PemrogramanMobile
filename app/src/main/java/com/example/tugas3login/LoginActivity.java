@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.CheckBox;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,12 +26,28 @@ public class LoginActivity extends AppCompatActivity {
     Button signin;
     TextView tvdaftar;
     FirebaseAuth mFirebaseAuth;
+    private EditText PassInput;
+    private CheckBox ShowPass;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        PassInput = findViewById(R.id.password);
+        ShowPass = findViewById(R.id.showPass);
+        ShowPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ShowPass.isChecked()){
+                    //Saat Checkbox dalam keadaan Checked, maka password akan di tampilkan
+                    PassInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else {
+                    //Jika tidak, maka password akan di sembuyikan
+                    PassInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         emailid = findViewById(R.id.email);
